@@ -26,15 +26,12 @@ def load_parquet_files():
         logging.info("Successfully loaded vehicle emissions file")
     
 
-        con = duckdb.connect(database='taxi_trips.duckdb', read_only=False)
-
         # creating base url for yellow taxi trips
-        base = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{year}-{month:02d}.parquet"
+        base = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-{month:02d}.parquet"
 
-        # create list of urls for 2015 - 2024, using base url
+        # create list of urls for 2024, using base url
         urls = [
-            base.format(year = year, month = month)
-            for year in range(2015, 2025) # 2025 is exclusive
+            base.format(month = month)
             for month in range(1, 13) # 13 is exclusive 
             ]
 
@@ -42,7 +39,7 @@ def load_parquet_files():
         con.execute(f"""
             DROP TABLE IF EXISTS yellow_taxi_trips;
             CREATE TABLE yellow_taxi_trips AS
-            SELECT VendorId, passenger_count, trip_distance, tpep_pickup_datetime, tpep_dropoff_datetime
+            SELECT passenger_count, trip_distance, tpep_pickup_datetime, tpep_dropoff_datetime
             FROM read_parquet('{urls[0]}');
         """)
         logger.info("Dropped yellow_taxi_trips if exists")
@@ -51,28 +48,28 @@ def load_parquet_files():
         for url in urls: 
             con.execute(f"""
                 INSERT INTO yellow_taxi_trips
-                SELECT VendorId, passenger_count, trip_distance, tpep_pickup_datetime, tpep_dropoff_datetime
+                SELECT passenger_count, trip_distance, tpep_pickup_datetime, tpep_dropoff_datetime
                 FROM read_parquet('{url}');
             """)
             time.sleep(60)
+            logging.info(f"Slept, and {url} has been uploaded.")
         logging.info("Successfully loaded all tables for yellow taxis trips")
 
         # creating base url for green taxi trips
-        green_base = "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_{year}-{month:02d}.parquet"
+        green_base = "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2024-{month:02d}.parquet"
 
-        # creating list of urls for 2015 - 2024, using base url
+        # creating list of urls for 2024, using base url
         green_urls = [
-            green_base.format(year = year, month = month)
-            for year in range(2015, 2025) # 2025 is exclusive
-            for month in range(1, 13) # 13 is exclusive
+            green_base.format(month = month)
+            for month in range(2, 13) # start at 02, and 13 is exclusive
         ]
 
-        # creating main table if doesnt exist 
+        # dropping creating main table 
         con.execute("""
             DROP TABLE IF EXISTS green_taxi_trips;
             CREATE TABLE green_taxi_trips AS
-            SELECT VendorId, passenger_count, trip_distance, tpep_pickup_datetime, tpep_dropoff_datetime
-            FROM read_parquet('{green_urls[0]}');
+            SELECT passenger_count, trip_distance, lpep_pickup_datetime, lpep_dropoff_datetime
+            FROM read_parquet('https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2024-01.parquet');
             """) 
         
         logger.info("Dropped green_taxi_trips if exists")
@@ -81,11 +78,11 @@ def load_parquet_files():
         for url in green_urls:
             con.execute(f"""
                 INSERT INTO green_taxi_trips
-                SELECT VendorId, passenger_count, trip_distance, tpep_pickup_datetime, tpep_dropoff_datetime
+                SELECT passenger_count, trip_distance, lpep_pickup_datetime, lpep_dropoff_datetime
                 FROM read_parquet('{url}');
             """)
             time.sleep(60)
-
+            logging.info(f"Slept, and {url} has been uploaded.")
         logging.info("Successfully loaded all tables for green taxis trips")        
     
     
@@ -95,3 +92,4 @@ def load_parquet_files():
 
 if __name__ == "__main__":
     load_parquet_files()
+
