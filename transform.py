@@ -19,22 +19,22 @@ def transforming():
 
         # total yellow co2 output 
         con.execute("""
-            ALTER TABLE yellow_taxi_trips 
-            ADD COLUMN trip_co2_kgs DOUBLE;
+           ALTER TABLE yellow_taxi_trips 
+            ADD COLUMN trip_co2_kgss DOUBLE;
 
             UPDATE yellow_taxi_trips
-            SET trip_co2_kgs = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
+            SET trip_co2_kgss = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
                 FROM vehicle_emissions
                 WHERE vehicle_emissions.vehicle_type = 'yellow_taxi';
         """)
 
          # total green co2 output 
         con.execute("""
-            ALTER TABLE green_taxi_trips 
-            ADD COLUMN trip_co2_kgs DOUBLE;
+           ALTER TABLE green_taxi_trips 
+           ADD COLUMN trip_co2_kgss DOUBLE;
 
             UPDATE green_taxi_trips
-            SET trip_co2_kgs = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
+            SET trip_co2_kgss = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
                 FROM vehicle_emissions
                 WHERE vehicle_emissions.vehicle_type = 'green_taxi';
         """)
@@ -79,7 +79,7 @@ def transforming():
             SET hour_of_day = EXTRACT(HOUR FROM lpep_pickup_datetime);
         """)
 
-        logging.info("Hour complete")
+        logging.info("Hour of day complete")
 
         # extract day of week yellow 
         con.execute("""
@@ -119,7 +119,7 @@ def transforming():
             SET week_of_year = EXTRACT(WEEK FROM lpep_pickup_datetime);
         """)
 
-        logging.info("Week complete")
+        logging.info("Week of year complete")
 
         # extract month of year yellow 
         con.execute("""
@@ -139,7 +139,7 @@ def transforming():
             SET month_of_year = EXTRACT(MONTH FROM lpep_pickup_datetime);
         """)
 
-        logging.info("Month complete")
+        logging.info("Month of year complete")
 
         
     except Exception as e:
