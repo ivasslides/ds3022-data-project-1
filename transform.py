@@ -8,6 +8,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+########## Using DBT ###########
+
 def transforming():
 
     con = None
@@ -20,10 +22,10 @@ def transforming():
         # total yellow co2 output 
         con.execute("""
            ALTER TABLE yellow_taxi_trips 
-            ADD COLUMN trip_co2_kgss DOUBLE;
+            ADD COLUMN trip_co2_kgs DOUBLE;
 
             UPDATE yellow_taxi_trips
-            SET trip_co2_kgss = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
+            SET trip_co2_kgs = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
                 FROM vehicle_emissions
                 WHERE vehicle_emissions.vehicle_type = 'yellow_taxi';
         """)
@@ -31,10 +33,10 @@ def transforming():
          # total green co2 output 
         con.execute("""
            ALTER TABLE green_taxi_trips 
-           ADD COLUMN trip_co2_kgss DOUBLE;
+           ADD COLUMN trip_co2_kgs DOUBLE;
 
             UPDATE green_taxi_trips
-            SET trip_co2_kgss = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
+            SET trip_co2_kgs = (trip_distance * vehicle_emissions.co2_grams_per_mile) / 1000.0
                 FROM vehicle_emissions
                 WHERE vehicle_emissions.vehicle_type = 'green_taxi';
         """)

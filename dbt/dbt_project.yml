@@ -7,11 +7,14 @@ profile: 'taxi_co2'
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
+seed-paths: ["../data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+
 models:
-  nyc_taxi_emissions:
+  taxi_co2:
     staging:
+      +materialized: table
+    transform:
       +materialized: table

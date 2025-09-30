@@ -1,0 +1,1 @@
+{"_invocation_id": "8394007a-eeba-4d62-a5da-c6941bdeff47", "linked": {"0": {"name": "model.taxi_co2.yellow_transform", "type": "model"}, "1": {"name": "seed.taxi_co2.vehicle_emissions", "type": "seed", "succ": [0, 2]}, "2": {"name": "model.taxi_co2.green_transform", "type": "model"}}}

@@ -17,6 +17,7 @@ def load_parquet_files():
         # Connect to local DuckDB instance
         con = duckdb.connect(database='emissions.duckdb', read_only=False)
         logger.info("Connected to DuckDB instance")
+
         # loading vehicle emissions csv file
         con.execute(f"""
             DROP TABLE IF EXISTS vehicle_emissions;
@@ -25,7 +26,6 @@ def load_parquet_files():
         """)
         logging.info("Successfully loaded vehicle emissions file")
     
-
         # creating base url for yellow taxi trips
         base = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-{month:02d}.parquet"
 
@@ -64,7 +64,7 @@ def load_parquet_files():
             for month in range(2, 13) # start at 02, and 13 is exclusive
         ]
 
-        # dropping creating main table 
+        # dropping and creating main table 
         con.execute("""
             DROP TABLE IF EXISTS green_taxi_trips;
             CREATE TABLE green_taxi_trips AS
