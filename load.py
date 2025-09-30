@@ -54,6 +54,10 @@ def load_parquet_files():
             time.sleep(60)
             logging.info(f"Slept, and {url} has been uploaded.")
         logging.info("Successfully loaded all tables for yellow taxis trips")
+        print("Successfully loaded all parquest files for yellow taxi trips from 2015-01 to 2015-12.")
+        ycount = con.execute("""
+            SELECT COUNT(*) FROM yellow_taxi_trips;""").fetchone()[0]
+        print(f"There are {ycount} trips included in the yellow_taxi_trip table.")
 
         # creating base url for green taxi trips
         green_base = "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2024-{month:02d}.parquet"
@@ -84,7 +88,10 @@ def load_parquet_files():
             time.sleep(60)
             logging.info(f"Slept, and {url} has been uploaded.")
         logging.info("Successfully loaded all tables for green taxis trips")        
-    
+        print("Successfully loaded all parquet files for green taxi trips from 2015-01 to 2015-12.")
+        gcount = con.execute("""
+            SELECT COUNT(*) FROM green_taxi_trips;""").fetchone()[0]
+        print(f"There are {gcount} trips included in the green_taxi_trip table.")
     
     except Exception as e:
         print(f"An error occurred: {e}")

@@ -52,6 +52,7 @@ def cleaning():
             SELECT COUNT(*) AS total_rows FROM green_taxi_trips;""").fetchone()[0]
         # if distinct rows = total rows, all good 
         if ydup == yorg and gdup == gorg:
+            print("No duplicates remaining.")
             logging.info("No duplicates remaining.")
         else:
             logging.info("Duplicates remaining.")
@@ -73,6 +74,7 @@ def cleaning():
             SELECT MIN(passenger_count) FROM green_taxi_trips;""").fetchone()[0] 
         # if min number of passengers is greater than 0, then all good
         if pass_yellow != 0 and pass_green!= 0:
+            print("All trips have at least 1 passenger.")
             logging.info("All trips have at least 1 passenger.")
         else:
             logging.info("There is a trip with no passengers remaining.")
@@ -94,6 +96,7 @@ def cleaning():
             SELECT MIN(trip_distance) FROM green_taxi_trips;""").fetchone()[0]
         # if min trip distance is not 0, all good
         if min_length_yellow != 0 and min_length_green != 0:
+            print("All trips are longer than 0 miles.")
             logging.info("All trips are longer than 0 miles.")
         else:
             logging.info("There is a trip that is 0 miles long remaining.")
@@ -115,6 +118,7 @@ def cleaning():
             SELECT MAX(trip_distance) FROM green_taxi_trips;""").fetchone()[0]
         # if max distance less than 100, all good
         if max_length_yellow <= 100 and max_length_green <= 100:
+            print("All trips are shorter than 100 miles.")
             logging.info("All trips are shorter than 100 miles.")
         else:
             logging.info("There is a trip longer than 100 miles remaining.")
@@ -150,6 +154,7 @@ def cleaning():
             SELECT MAX(trip_seconds) FROM green_taxi_trips;""").fetchone()[0]
         # if max seconds is less than 86400, all good
         if max_time_yellow <= 86400 and max_time_green <= 86400:
+            print("All trips are shorter than 1 day.")
             logging.info("All trips are shorter than 1 day.")
         else:
             logging.info("There is a trip longer than 1 day remaining.")

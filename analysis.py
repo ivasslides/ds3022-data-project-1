@@ -22,7 +22,10 @@ def analyze():
             ORDER BY trip_co2_kgs DESC
             LIMIT 1;
         """).fetchone()
-        logging.info(f"The single largest carbon producing trip of the year for all yellow taxi trips was {ylargest_cpt}")
+        # print and log output
+        yl = "The single largest carbon producing trip of the year for all yellow taxi trips was "
+        logging.info(f"{yl} {ylargest_cpt}")
+        print(f"{yl} {ylargest_cpt}")
 
         # single largest carbon producing trip of the year green
         glargest_cpt = con.execute("""
@@ -30,7 +33,10 @@ def analyze():
             ORDER BY trip_co2_kgs DESC
             LIMIT 1;
         """).fetchone()
-        logging.info(f"The single largest carbon producing trip of the year for all green taxi trips was {glargest_cpt}")
+        # print and log output
+        gl = "The single largest carbon producing trip of the year for all green taxi trips was "
+        logging.info(f"{gl} {glargest_cpt}")
+        print(f"{gl} {glargest_cpt}")
 
         # most carbon heavy/light hours of the day yellow
         yheaviest_hour = con.execute("""
@@ -47,7 +53,12 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy hour of the day for yellow taxi trips is {yheaviest_hour} and the most carbon light hour of the day is {ylightest_hour}.")
+        # print and log output
+        yh1 = "On average, the most carbon heavy hour of the day for yellow taxi trips is "
+        yh2 = " and the most carbon light hour of the day is "
+        logging.info(f"{yh1} {yheaviest_hour} {yh2} {ylightest_hour}.")
+        print(f"{yh1} {yheaviest_hour} {yh2} {ylightest_hour}.")
+
 
         # most carbon heavy/light hours of the day green
         gheaviest_hour = con.execute("""
@@ -64,7 +75,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy hour of the day for green taxi trips is {gheaviest_hour} and the most carbon light hour of the day is {glightest_hour}.")
+        # print and log output
+        gh1 = "On average, the most carbon heavy hour of the day for green taxi trips is "
+        gh2 = " and the most carbon light hour of the day is "
+        logging.info(f"{gh1} {gheaviest_hour} {gh2} {glightest_hour}.")
+        print(f"{gh1} {gheaviest_hour} {gh2} {glightest_hour}.")
 
         # most carbon heavy/light day of the week yellow
         yheaviest_day = con.execute("""
@@ -81,8 +96,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-
-        logging.info(f"On average, the most carbon heay day of the week for yellow taxi trips is {yheaviest_day} and the most carbon light day of the week is {ylightest_day}.")
+        # print and log output
+        yd1 = "On average, the most carbon heavy day of the week for yellow taxi trips is "
+        yd2 = " and the most carbon light day of the week is "
+        logging.info(f"{yd1} {yheaviest_day} {yd2} {ylightest_day}.")
+        print(f"{yd1} {yheaviest_day} {yd2} {ylightest_day}.")
 
         # most carbon heavy/light day of the week green
         gheaviest_day = con.execute("""
@@ -99,7 +117,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy day of the week for green taxi trips is {gheaviest_day} and the most carbon light day of the week is {glightest_day}.")
+        # print and log output 
+        gd1 = "On average, the most carbon heavy day of the week for green taxi trips is "
+        gd2 = " and the most carbon light day of the week is "
+        logging.info(f"{gd1} {gheaviest_day} {gd2} {glightest_day}.")
+        print(f"{gd1} {gheaviest_day} {gd2} {glightest_day}.")
 
         # most carbon heavy/light week of the year yellow
         yheaviest_week = con.execute("""
@@ -116,7 +138,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy week of the year for yellow taxi trips is {yheaviest_week} and the most carbon light week of the year is {ylightest_week}.")
+        yw1 = "On average, the most carbon heavy week of the year for yellow taxi trips is "
+        yw2 = " and the most carbon light week of the year is "
+        logging.info(f"{yw1} {yheaviest_week} {yw2} {ylightest_week}.")
+        print(f"{yw1} {yheaviest_week} {yw2} {ylightest_week}.")
+
 
         # most carbon heavy/light week of the year green
         gheaviest_week = con.execute("""
@@ -133,7 +159,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy week of the year for green taxi trips is {gheaviest_week} and the most carbon light week of the year is {glightest_week}.")
+        # print and log output
+        gw1 = "On average, the most carbon heavy week of the year for green taxi trips is "
+        gw2 = " and the most carbon light week of the year is "
+        logging.info(f"{gw1} {gheaviest_week} {gw2} {glightest_week}.")
+        print(f"{gw1} {gheaviest_week} {gw2} {glightest_week}.")
 
         # most carbon heavy/light month of the year yellow
         yheaviest_month = con.execute("""
@@ -150,7 +180,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy month of the year for yellow taxi trips is {yheaviest_month} and the most carbon light month of the year is {ylightest_month}.")
+        # print and log output
+        ym1 = "On average, the most carbon heavy month of the year for yellow taxi trips is "
+        ym2 = " and the most carbon light month of the year is "
+        logging.info(f"{ym1} {yheaviest_month} {ym2} {ylightest_month}.")
+        print(f"{ym1} {yheaviest_month} {ym2} {ylightest_month}.")
 
         # most carbon heavy/light month of the year green
         gheaviest_month = con.execute("""
@@ -167,7 +201,11 @@ def analyze():
                 ORDER BY AVG(trip_co2_kgs) ASC
             LIMIT 1;
         """).fetchone()[0]
-        logging.info(f"On average, the most carbon heavy month of the year for green taxi trips is {gheaviest_month} and the most carbon light month of the year is {glightest_month}.")
+        # print and log output
+        gm1 = "On average, the most carbon heavy month of the year for green taxi trips is "
+        gm2 = " and the most carbon light month of the year is "
+        logging.info(f"{gm1} {gheaviest_month} {gm2} {glightest_month}.")
+        print(f"{gm1} {gheaviest_month} {gm2} {glightest_month}.")
 
         # plotting month and co2 totals yellow
         import pandas as pd 
